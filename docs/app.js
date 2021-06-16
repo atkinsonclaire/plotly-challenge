@@ -1,27 +1,5 @@
 d3.json("data/samples.json").then((importedData) => {
     var data = importedData;
-
-    d3.selectAll("#selDataset").on("change", updatePlotly);
-
-    function updatePlotly() {
-        var dropdownMenu = d3.select("#selDataset");
-        var id_number = dropdownMenu.property("value");
-
-        if (id_number === data.map(row => row.samples.id)) {
-            var id_panel = d3.select("#sample-metadata")
-            data.metadata.forEach(function(person) {
-                console.log(person);
-                var row = id_panel.append("tr");
-              
-                Object.entries(person).forEach(function([key, value]) {
-                console.log(key, value);
-                var cell = row.append("td");
-                cell.text(value);
-                });
-            });
-        }
-    }
-  
     data.sort(function(a, b) {
       return parseFloat(b.sample_values) - parseFloat(a.sample_values);
     });
