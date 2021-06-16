@@ -1,10 +1,6 @@
-d3.json("docs/samples.json").then((importedData) => {
+d3.json("samples.json").then((importedData) => {
     var data = importedData;
-    data.sort(function(a, b) {
-      return parseFloat(b.sample_values) - parseFloat(a.sample_values);
-    });
-  
-    data = data.slice(0, 10);
+    data = data.samples.sample_values.slice(0, 10);
   
     data = data.reverse();
   
@@ -51,8 +47,7 @@ d3.json("docs/samples.json").then((importedData) => {
         width: 600
     };
       
-    Plotly.newPlot("bubble", bubblechartData, layout2);
+    Plotly.newPlot('bubble', bubblechartData, layout2);
 });
 
-  
   
