@@ -1,4 +1,4 @@
-d3.json("data/samples.json").then((importedData) => {
+d3.json("samples.json").then((importedData) => {
     var data = importedData;
     data.sort(function(a, b) {
       return parseFloat(b.sample_values) - parseFloat(a.sample_values);
