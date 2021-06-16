@@ -1,4 +1,4 @@
-d3.json("samples.json").then((importedData) => {
+d3.json("docs/samples.json").then((importedData) => {
     var data = importedData;
     data = data.samples.sample_values.slice(0, 10);
   
