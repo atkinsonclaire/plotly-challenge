@@ -1,21 +1,39 @@
-d3.json("docs/samples.json").then((importedData) => {
+d3.json("samples.json").then((importedData) => {
     var data = importedData;
-    
-    data.sort(function(newSample) {
-        return parseFloat(newSample.samples.sample_values);
-    });
-    
-    data = data.samples.sample_values.slice(0, 10);
-  
-    data = data.reverse();
+
+    d3.selectAll("#selDataset").on("change", updatePlotly);
+
+    function updatePlotly() {
+        var dropdownMenu = d3.select("#selDataset");
+        var id_number = dropdownMenu.property("value");
+
+        if (id_number === data.map(row => row.samples.id)) {
+            var id_panel = d3.select("#sample-metadata")
+            data.metadata.forEach(function(person) {
+                console.log(person);
+                var row = id_panel.append("tr");
+              
+                Object.entries(person).forEach(function([key, value]) {
+                console.log(key, value);
+                var cell = row.append("td");
+                cell.text(value);
+                });
+            });
+        }
+    }
+    data.samples.forEach(function(topTen) {
+        Object.entries(topTen).forEach(function(newLoop) {
+            console.log(newLoop); 
+        })
+    })
   
     var trace1 = {
-      x: data.map(row => row.samples.sample_values),
-      y: data.map(row => row.samples.otu_ids),
-      text: data.map(row => row.samples.otu_ids),
+      x: data.samples.map(row => row.sample_values),
+      y: data.samples.map(row => row.otu_ids),
+      text: data.samples.map(row => row.otu_ids),
       type: "bar",
       orientation: "h",
-      hovertext: data.map(row => row.samples.otu_labels)
+      hovertext: data.samples.map(row => row.otu_labels)
     };
   
     var barchartData = [trace1];
@@ -30,16 +48,16 @@ d3.json("docs/samples.json").then((importedData) => {
       }
     };
   
-    Plotly.newPlot("bar", barchartData, layout);
+    Plotly.newPlot('bar', barchartData, layout);
 
     var trace2 = {
-        x: data.map(row => row.samples.otu_ids),
-        y: data.map(row => row.samples.sample_values),
-        text: data.map(row => row.samples.otu_labels),
+        x: data.samples.map(row => row.otu_ids),
+        y: data.samples.map(row => row.sample_values),
+        text: data.samples.map(row => row.otu_labels),
         mode: 'markers',
         marker: {
-            color: data.map(row => row.samples.otu_ids),  
-            size: data.map(row => row.samples.sample_values),
+            color: data.samples.map(row => row.otu_ids),
+            size: data.samples.map(row => row.sample_values)
         },
     };
       
